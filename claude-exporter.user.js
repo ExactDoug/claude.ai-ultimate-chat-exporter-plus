@@ -1,18 +1,22 @@
 // ==UserScript==
-// @name         Claude.ai Ultimate Chat Exporter
-// @description  Adds "Export All Chats" and "Export Chat" buttons to Claude.ai
-// @version      1.0
-// @author       Geo Anima
-// @namespace    https://github.com/GeoAnima/claude.ai-ultimate-chat-exporter
+// @name         Claude.ai Ultimate Chat Exporter Plus
+// @description  Enhanced version of Claude.ai Ultimate Chat Exporter with improved functionality
+// @version      1.1
+// @author       Doug Mortensen (forked from Geo Anima)
+// @namespace    https://github.com/DougMortensen/claude.ai-ultimate-chat-exporter-plus
 // @match        https://claude.ai/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_download
 // @license      MIT
+// @downloadURL  https://update.greasyfork.org/scripts/YOUR-SCRIPT-ID/Claude.ai%20Ultimate%20Chat%20Exporter%20Plus.user.js
+// @updateURL    https://update.greasyfork.org/scripts/YOUR-SCRIPT-ID/Claude.ai%20Ultimate%20Chat%20Exporter%20Plus.meta.js
 // ==/UserScript==
 
 /*
 NOTES:
-- This project is a fork of "Export Claude.Ai" (https://github.com/TheAlanK/export-claude), licensed under the MIT license.
+- This project is a fork of "Claude.ai Ultimate Chat Exporter" (https://github.com/GeoAnima/claude.ai-ultimate-chat-exporter), licensed under the MIT license.
+- Original author: Geo Anima
+- Enhanced by Doug Mortensen
 - The "Export All Chats" option can only be accessed from the https://claude.ai/chats URL.
 - When saving, the user is prompted for json and txt format options.
 */
@@ -127,30 +131,28 @@ NOTES:
         }
     }
 
-    // Function to create a button
     function createButton(text, onClick) {
         const button = document.createElement('button');
         button.textContent = text;
-        button.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 9999;
-        `;
+        button.dataset.claudeExporter = true; // Unique identifier
+        button.style.cssText = `...`; // Your existing styles
         button.addEventListener('click', onClick);
-        document.body.appendChild(button);
+
+        // Find the desired container element
+        const container = document.querySelector('body > div.flex.min-h-screen.w-full > div > div');
+
+        // Check if the container element exists
+        if (container) {
+            container.appendChild(button);
+        } else {
+            // Fallback to appending to the body if the container is not found
+            document.body.appendChild(button);
+        }
     }
 
-    // Function to remove existing export buttons
+    // Function to remove existing export buttons (more robust)
     function removeExportButtons() {
-        const existingButtons = document.querySelectorAll('button[style*="position: fixed"]');
+        const existingButtons = document.querySelectorAll('button[data-claude-exporter]'); // Add a unique data attribute
         existingButtons.forEach((button) => {
             button.remove();
         });
@@ -218,13 +220,26 @@ NOTES:
 
     // Function to initialize the script
     async function init() {
+        console.log("Starting Claude.ai Exporter...");
         await initExportFunctionality();
         // Observe URL changes and reinitialize export functionality
         observeUrlChanges(async () => {
+            console.log("URL changed, re-initializing...");
             await initExportFunctionality();
         });
     }
 
-    // Wait for the desired element to be present in the DOM before initializing the script
-    observeDOMChanges('.grecaptcha-badge', init);
+    // Function to initialize the script
+    async function init() {
+        console.log("Starting Claude.ai Exporter...");
+        await initExportFunctionality();
+        // Observe URL changes and reinitialize export functionality
+        observeUrlChanges(async () => {
+            console.log("URL changed, re-initializing...");
+            await initExportFunctionality();
+        });
+    }
+
+    setTimeout(init, 3000); // 1000 milliseconds = 1 second
+
 })();
