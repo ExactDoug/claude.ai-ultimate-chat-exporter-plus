@@ -52,7 +52,7 @@ An enhanced userscript for exporting chat conversations from Claude.ai, building
 
 This project is a fork of [Claude.ai Ultimate Chat Exporter](https://github.com/GeoAnima/claude.ai-ultimate-chat-exporter) by Geo Anima, licensed under the MIT License. Original functionality and core implementation by Geo Anima.
 
-Enhanced and maintained by [Doug Mortensen](https://github.com/DougMortensen).
+Enhanced and maintained by [Doug Mortensen](https://github.com/ExactDoug).
 
 ## Development Roadmap
 

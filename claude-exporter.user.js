@@ -3,7 +3,7 @@
 // @description  Enhanced version of Claude.ai Ultimate Chat Exporter with improved functionality
 // @version      1.1
 // @author       Doug Mortensen (forked from Geo Anima)
-// @namespace    https://github.com/DougMortensen/claude.ai-ultimate-chat-exporter-plus
+// @namespace    https://github.com/ExactDoug/claude.ai-ultimate-chat-exporter-plus
 // @match        https://claude.ai/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_download
